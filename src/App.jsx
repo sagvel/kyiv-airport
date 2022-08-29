@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
+import Flights from './features/flights/components/Flights';
+import { Provider } from 'react-redux';
+import store from './store';
 
 const App = () => {
   return (
-    <div>App</div>
-  )
-}
+    <Provider store={store}>
+      <Flights />
+    </Provider>
+  );
+};
 
-export default App
+export default App;
