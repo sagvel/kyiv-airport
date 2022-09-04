@@ -19,6 +19,10 @@ const Flights = ({ flightDataFetching, flights }) => {
   const { body } = flights;
   console.log(body);
 
+  if (body) {
+    console.log(body.departure);
+  }
+
   // const { arrival } = body;
 
   // console.log(arrival);
@@ -43,16 +47,17 @@ const Flights = ({ flightDataFetching, flights }) => {
           </tr>
         </thead>
         <tbody>
-          {/* {flights.body.departure.map(flight => {
-            <tr>
-              <td>{}</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>;
-          })} */}
+          {body &&
+            flights.body.departure.map(flight => (
+              <tr key={flight.ID}>
+                <td>{flight.term}</td>
+                <td>{flight.timeBoard}</td>
+                <td>{flight['airportToID.city_en']}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </>
