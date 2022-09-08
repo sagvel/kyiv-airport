@@ -4,29 +4,11 @@ import SearchFlights from './SearchFlights';
 import * as flightsActions from './flights.actions';
 import { flightsDataSelector } from './flights.selectors';
 import './styles.scss';
+import Departures from './Departures';
+import { Link, Navigate, Route, Routes } from 'react-router-dom';
+import Arrivals from './Arrivals';
 
-const Flights = ({ flightDataFetching, flights }) => {
-  useEffect(() => {
-    flightDataFetching();
-  }, []);
-
-  if (!flights) {
-    return null;
-  }
-
-  console.log(flights.body);
-
-  const { body } = flights;
-  console.log(body);
-
-  if (body) {
-    console.log(body.departure);
-  }
-
-  // const { arrival } = body;
-
-  // console.log(arrival);
-
+const Flights = () => {
   return (
     <>
       <h1 className="title">Search flight</h1>
@@ -35,7 +17,7 @@ const Flights = ({ flightDataFetching, flights }) => {
         <div className="tabs">
           <ul className="nav nav-tabs">
             <li className="nav-tabs__item nav-tabs__item_active">
-              <a href="#" className="nav-tabs__link nav-tabs__link-departures">
+              <Link to="departures" className="nav-tabs__link nav-tabs__link-departures">
                 <i>
                   <svg
                     data-v-7746f986=""
@@ -73,10 +55,10 @@ const Flights = ({ flightDataFetching, flights }) => {
                   </svg>
                 </i>
                 Departures
-              </a>
+              </Link>
             </li>
             <li className="nav-tabs__item">
-              <a href="#" className="nav-tabs__link nav-tabs__link-arrivals">
+              <Link to="arrivals" className="nav-tabs__link nav-tabs__link-arrivals">
                 <i>
                   <svg
                     data-v-7746f986=""
@@ -109,7 +91,7 @@ const Flights = ({ flightDataFetching, flights }) => {
                   </svg>
                 </i>
                 Arrivals
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -142,19 +124,11 @@ const Flights = ({ flightDataFetching, flights }) => {
             </tr>
           </thead>
           <tbody>
-            {body.departure.map(flight => (
-              <tr key={flight.ID}>
-                <td>{flight.term}</td>
-                <td>{flight.timeDepShedule}</td>
-                <td>{flight['airportToID.city_en']}</td>
-                <td></td>
-                <td>
-                  <img className="airline-logo" src={flight.airline.en.logoName} />
-                  {flight.airline.en.name}
-                </td>
-                <td>{flight.codeShareData[0].codeShare}</td>
-              </tr>
-            ))}
+            <Routes>
+              <Route path="/" element={<Navigate to="departures" replace />} />
+              <Route path="departures" element={<Departures />} />
+              <Route path="arrivals" element={<Arrivals />} />
+            </Routes>
           </tbody>
         </table>
       </div>
@@ -162,14 +136,4 @@ const Flights = ({ flightDataFetching, flights }) => {
   );
 };
 
-const mapState = state => {
-  return {
-    flights: flightsDataSelector(state),
-  };
-};
-
-const mapDispatch = {
-  flightDataFetching: flightsActions.flightDataFetching,
-};
-
-export default connect(mapState, mapDispatch)(Flights);
+export default Flights;
