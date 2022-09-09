@@ -2,17 +2,21 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as flightsActions from './flights.actions';
 import { flightsDataSelector } from './flights.selectors';
+import moment from 'moment';
 
-const Departures = ({ flightDataFetching, flights }) => {
+const Departures = ({ flightDataFetching, flights, calendarDate }) => {
+  const date = moment(calendarDate).format('DD-MM-YYYY');
   useEffect(() => {
-    flightDataFetching('11-01-2022');
-  }, []);
+    console.log('render Departures');
+    flightDataFetching(date);
+  }, [date]);
 
   if (!flights) {
     return null;
   }
 
   const { body } = flights;
+  console.log(body);
   return (
     <>
       {body.departure.map(flight => (

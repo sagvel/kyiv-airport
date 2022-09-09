@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as flightsActions from './flights.actions';
 import { flightsDataSelector } from './flights.selectors';
+import moment from 'moment';
 
-const Arrivals = ({ flightDataFetching, flights }) => {
+const Arrivals = ({ flightDataFetching, flights, calendarDate }) => {
+  const date = moment(calendarDate).format('DD-MM-YYYY');
   useEffect(() => {
-    flightDataFetching();
+    flightDataFetching(date);
   }, []);
 
   if (!flights) {

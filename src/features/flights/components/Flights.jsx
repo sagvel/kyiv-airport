@@ -1,16 +1,35 @@
-import React, { useEffect } from 'react';
-
+import React, { useEffect, useState } from 'react';
 import SearchFlights from './SearchFlights';
-
 import './styles.scss';
 import Departures from './Departures';
-import { Link, Navigate, Route, Routes } from 'react-router-dom';
+import { Link, Navigate, Route, Routes, useLocation, useSearchParams } from 'react-router-dom';
 import Arrivals from './Arrivals';
+import moment from 'moment/moment';
 
 const Flights = () => {
+  const currentDate = moment(new Date()).format('DD-MM-YYYY');
+  const [calendarDate, setCalendarDate] = useState(currentDate);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+
+  const date = searchParams.get('date');
+
+  const calendarHandler = event => {
+    setSearchParams({ date: moment(event.target.value).format('DD-MM-YYYY') });
+    setCalendarDate(event.target.value);
+  };
+
+  console.log(calendarDate);
+
   return (
     <>
       <h1 className="title">Search flight</h1>
+      <div className="params">
+        {location.pathname}
+        {location.search}
+        <div>{date}</div>
+      </div>
+
       <SearchFlights />
       <div className="search-results">
         <div className="tabs">
@@ -95,7 +114,13 @@ const Flights = () => {
           </ul>
         </div>
         <div className="calendar">
-          <input type="date" />
+          <input
+            type="date"
+            className="calendar"
+            name="calendar"
+            onChange={calendarHandler}
+            value={calendarDate}
+          />
           <div className="datas">
             <div className="prev-data">
               <div className="data__num">02/09</div>
@@ -125,8 +150,8 @@ const Flights = () => {
           <tbody>
             <Routes>
               <Route path="/" element={<Navigate to="departures" replace />} />
-              <Route path="departures" element={<Departures />} />
-              <Route path="arrivals" element={<Arrivals />} />
+              <Route path="departures" element={<Departures calendarDate={calendarDate} />} />
+              <Route path="arrivals" element={<Arrivals calendarDate={calendarDate} />} />
             </Routes>
           </tbody>
         </table>
