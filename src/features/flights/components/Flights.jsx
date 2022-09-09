@@ -7,19 +7,18 @@ import Arrivals from './Arrivals';
 import moment from 'moment/moment';
 
 const Flights = () => {
-  const currentDate = moment(new Date()).format('DD-MM-YYYY');
-  const [calendarDate, setCalendarDate] = useState(currentDate);
+  // const currentDate = moment(new Date()).format('DD-MM-YYYY');
+  // const [calendarDate, setCalendarDate] = useState(currentDate);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
 
+  const calendarHandler = event => {
+    setSearchParams({ date: event.target.value });
+    // setCalendarDate(event.target.value);
+  };
   const date = searchParams.get('date');
 
-  const calendarHandler = event => {
-    setSearchParams({ date: moment(event.target.value).format('DD-MM-YYYY') });
-    setCalendarDate(event.target.value);
-  };
-
-  console.log(calendarDate);
+  console.log(date);
 
   return (
     <>
@@ -119,7 +118,7 @@ const Flights = () => {
             className="calendar"
             name="calendar"
             onChange={calendarHandler}
-            value={calendarDate}
+            value={date}
           />
           <div className="datas">
             <div className="prev-data">
@@ -150,8 +149,8 @@ const Flights = () => {
           <tbody>
             <Routes>
               <Route path="/" element={<Navigate to="departures" replace />} />
-              <Route path="departures" element={<Departures calendarDate={calendarDate} />} />
-              <Route path="arrivals" element={<Arrivals calendarDate={calendarDate} />} />
+              <Route path="departures" element={<Departures calendarDate={date} />} />
+              <Route path="arrivals" element={<Arrivals calendarDate={date} />} />
             </Routes>
           </tbody>
         </table>
