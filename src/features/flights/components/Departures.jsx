@@ -5,7 +5,7 @@ import { flightsDataSelector } from './flights.selectors';
 
 const Departures = ({ flightDataFetching, flights }) => {
   useEffect(() => {
-    flightDataFetching();
+    flightDataFetching('11-01-2022');
   }, []);
 
   if (!flights) {

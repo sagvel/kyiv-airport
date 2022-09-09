@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+
 import SearchFlights from './SearchFlights';
-import * as flightsActions from './flights.actions';
-import { flightsDataSelector } from './flights.selectors';
+
 import './styles.scss';
 import Departures from './Departures';
 import { Link, Navigate, Route, Routes } from 'react-router-dom';

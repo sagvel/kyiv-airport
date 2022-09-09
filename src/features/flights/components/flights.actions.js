@@ -11,9 +11,9 @@ export const flightDataRecieved = flightData => {
   };
 };
 
-export const flightDataFetching = () => {
+export const flightDataFetching = (url) => {
   return function (dispatch) {
-    getFlightsData().then(data => {
+    getFlightsData(url).then(data => {
       dispatch(flightDataRecieved(data));
     });
   };
