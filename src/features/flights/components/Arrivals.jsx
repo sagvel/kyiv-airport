@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import * as flightsActions from './flights.actions';
 import { flightsDataSelector } from './flights.selectors';
 import moment from 'moment';
+import { useLocation } from 'react-router-dom';
 
 const Arrivals = ({ flightDataFetching, flights, calendarDate }) => {
+  const location = useLocation();
   const date = moment(calendarDate).format('DD-MM-YYYY');
   useEffect(() => {
     flightDataFetching(date);

@@ -2,19 +2,24 @@ import React, { useEffect, useState } from 'react';
 import SearchFlights from './SearchFlights';
 import './styles.scss';
 import Departures from './Departures';
-import { Link, Navigate, Route, Routes, useLocation, useSearchParams } from 'react-router-dom';
+import {
+  Link,
+  Navigate,
+  NavLink,
+  Route,
+  Routes,
+  useLocation,
+  useSearchParams,
+} from 'react-router-dom';
 import Arrivals from './Arrivals';
 import moment from 'moment/moment';
 
 const Flights = () => {
-  // const currentDate = moment(new Date()).format('DD-MM-YYYY');
-  // const [calendarDate, setCalendarDate] = useState(currentDate);
   const [searchParams, setSearchParams] = useSearchParams();
-  const location = useLocation();
+  const { search, pathname } = useLocation();
 
   const calendarHandler = event => {
     setSearchParams({ date: event.target.value });
-    // setCalendarDate(event.target.value);
   };
   const date = searchParams.get('date');
 
@@ -24,8 +29,8 @@ const Flights = () => {
     <>
       <h1 className="title">Search flight</h1>
       <div className="params">
-        {location.pathname}
-        {location.search}
+        {pathname}
+        {search}
         <div>{date}</div>
       </div>
 
@@ -34,7 +39,10 @@ const Flights = () => {
         <div className="tabs">
           <ul className="nav nav-tabs">
             <li className="nav-tabs__item nav-tabs__item_active">
-              <Link to="departures" className="nav-tabs__link nav-tabs__link-departures">
+              <NavLink
+                to={{ pathname: 'departures', search }}
+                className="nav-tabs__link nav-tabs__link-departures"
+              >
                 <i>
                   <svg
                     data-v-7746f986=""
@@ -72,10 +80,13 @@ const Flights = () => {
                   </svg>
                 </i>
                 Departures
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-tabs__item">
-              <Link to="arrivals" className="nav-tabs__link nav-tabs__link-arrivals">
+              <NavLink
+                to={{ pathname: 'arrivals', search }}
+                className="nav-tabs__link nav-tabs__link-arrivals"
+              >
                 <i>
                   <svg
                     data-v-7746f986=""
@@ -108,7 +119,7 @@ const Flights = () => {
                   </svg>
                 </i>
                 Arrivals
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>
