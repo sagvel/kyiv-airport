@@ -1,40 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import SearchFlights from './SearchFlights';
 import './styles.scss';
 import Departures from './Departures';
-import {
-  Link,
-  Navigate,
-  NavLink,
-  Route,
-  Routes,
-  useLocation,
-  useSearchParams,
-} from 'react-router-dom';
+import { Navigate, NavLink, Route, Routes, useLocation, useSearchParams } from 'react-router-dom';
 import Arrivals from './Arrivals';
 import moment from 'moment/moment';
 
 const Flights = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { search, pathname } = useLocation();
+  const searchFlights = searchParams.get('searchFlights') || '';
+  const date = searchParams.get('date') || '';
+
+  useEffect(() => {
+    const currentDate = moment(new Date()).format('YYYY-MM-DD');
+    setSearchParams({ date: currentDate, searchFlights });
+  }, []);
 
   const calendarHandler = event => {
-    setSearchParams({ date: event.target.value });
+    setSearchParams({ date: event.target.value, searchFlights });
   };
-  const date = searchParams.get('date');
 
-  console.log(date);
+  const searchHandler = event => {
+    event.preventDefault();
+    setSearchParams({ searchFlights: event.target.elements.search.value, date });
+    console.log(searchFlights);
+  };
 
   return (
     <>
       <h1 className="title">Search flight</h1>
-      <div className="params">
-        {pathname}
-        {search}
-        <div>{date}</div>
-      </div>
 
-      <SearchFlights />
+      <SearchFlights searchHandler={searchHandler} />
       <div className="search-results">
         <div className="tabs">
           <ul className="nav nav-tabs">
@@ -160,8 +157,15 @@ const Flights = () => {
           <tbody>
             <Routes>
               <Route path="/" element={<Navigate to="departures" replace />} />
-              <Route path="departures" element={<Departures calendarDate={date} />} />
-              <Route path="arrivals" element={<Arrivals calendarDate={date} />} />
+              <Route
+                path="departures"
+                element={<Departures calendarDate={date} searchFlights={searchFlights} />}
+              />
+              <Route
+                path="arrivals"
+                element={<Arrivals calendarDate={date} searchFlights={searchFlights} />}
+                searchFlights={searchFlights}
+              />
             </Routes>
           </tbody>
         </table>

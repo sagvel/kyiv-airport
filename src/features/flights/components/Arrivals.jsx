@@ -5,8 +5,7 @@ import { flightsDataSelector } from './flights.selectors';
 import moment from 'moment';
 import { useLocation } from 'react-router-dom';
 
-const Arrivals = ({ flightDataFetching, flights, calendarDate }) => {
-  const location = useLocation();
+const Arrivals = ({ flightDataFetching, flights, calendarDate, searchFlights }) => {
   const date = moment(calendarDate).format('DD-MM-YYYY');
   useEffect(() => {
     flightDataFetching(date);
@@ -16,10 +15,14 @@ const Arrivals = ({ flightDataFetching, flights, calendarDate }) => {
     return null;
   }
   const { body } = flights;
+
+  const arrivals = body.arrival.filter(fligth =>
+    fligth.codeShareData[0].codeShare.includes(searchFlights.toUpperCase()),
+  );
   console.log(body);
   return (
     <>
-      {body.arrival.map(flight => (
+      {arrivals.map(flight => (
         <tr key={flight.ID}>
           <td>{flight.term}</td>
           <td>{flight.timeArrShedule}</td>

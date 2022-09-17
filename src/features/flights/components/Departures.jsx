@@ -4,10 +4,9 @@ import * as flightsActions from './flights.actions';
 import { flightsDataSelector } from './flights.selectors';
 import moment from 'moment';
 
-const Departures = ({ flightDataFetching, flights, calendarDate }) => {
+const Departures = ({ flightDataFetching, flights, calendarDate, searchFlights }) => {
   const date = moment(calendarDate).format('DD-MM-YYYY');
   useEffect(() => {
-    console.log('render Departures');
     flightDataFetching(date);
   }, [date]);
 
@@ -17,9 +16,13 @@ const Departures = ({ flightDataFetching, flights, calendarDate }) => {
 
   const { body } = flights;
   console.log(body);
+  const departures = body.departure.filter(fligth =>
+    fligth.codeShareData[0].codeShare.includes(searchFlights.toUpperCase()),
+  );
+
   return (
     <>
-      {body.departure.map(flight => (
+      {departures.map(flight => (
         <tr key={flight.ID}>
           <td>{flight.term}</td>
           <td>{flight.timeDepShedule}</td>

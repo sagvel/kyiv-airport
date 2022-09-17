@@ -1,8 +1,8 @@
 import React from 'react';
 
-const SearchFlights = () => {
+const SearchFlights = ({ searchHandler }) => {
   return (
-    <form className="search-flights__form" name="searchFlightsForm">
+    <form className="search-flights__form" name="searchFlightsForm" onSubmit={searchHandler}>
       <svg
         className="search-icon"
         data-v-547e829a=""
@@ -36,8 +36,11 @@ const SearchFlights = () => {
         className="search-flights__input"
         type="text"
         placeholder="Airline, destination or flight #"
+        name="search"
       />
-      <button className="search-flights__btn">Search</button>
+      <button type="submit" className="search-flights__btn">
+        Search
+      </button>
     </form>
   );
 };
