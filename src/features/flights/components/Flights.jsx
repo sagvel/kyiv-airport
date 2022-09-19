@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import SearchFlights from './SearchFlights';
 import './styles.scss';
-import Departures from './Departures';
+import FlightsType from './FlightsType';
 import { Navigate, NavLink, Route, Routes, useLocation, useSearchParams } from 'react-router-dom';
 import Arrivals from './Arrivals';
 import moment from 'moment/moment';
@@ -9,11 +9,14 @@ import moment from 'moment/moment';
 const Flights = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { search, pathname } = useLocation();
+  const currentDate = moment(new Date()).format('YYYY-MM-DD');
+  const currentDay = moment(Date.now()).format('DD/MM');
+  const nextDay = moment(Date.now() + 86400000).format('DD/MM');
+  const prevDay = moment(Date.now() - 86400000).format('DD/MM');
   const searchFlights = searchParams.get('searchFlights') || '';
   const date = searchParams.get('date') || '';
 
   useEffect(() => {
-    const currentDate = moment(new Date()).format('YYYY-MM-DD');
     setSearchParams({ date: currentDate, searchFlights });
   }, []);
 
@@ -30,6 +33,10 @@ const Flights = () => {
   return (
     <>
       <h1 className="title">Search flight</h1>
+      <div className="params">
+        {pathname}
+        {search}
+      </div>
 
       <SearchFlights searchHandler={searchHandler} />
       <div className="search-results">
@@ -130,45 +137,34 @@ const Flights = () => {
           />
           <div className="datas">
             <div className="prev-data">
-              <div className="data__num">02/09</div>
+              <div className="data__num">{prevDay}</div>
               <div className="data__title">Yesterday</div>
             </div>
             <div className="current-data">
-              <div className="data__num">03/09</div>
+              <div className="data__num">{currentDay}</div>
               <div className="data__title">Today</div>
             </div>
             <div className="next-data">
-              <div className="data__num">03/09</div>
+              <div className="data__num">{nextDay}</div>
               <div className="data__title">Tomorrow</div>
             </div>
           </div>
         </div>
-        <table className="result-table">
-          <thead>
-            <tr>
-              <th>Terninal</th>
-              <th>Local time</th>
-              <th>Destination</th>
-              <th>Status</th>
-              <th>Airline</th>
-              <th>Flight</th>
-            </tr>
-          </thead>
-          <tbody>
-            <Routes>
-              <Route path="/" element={<Navigate to="departures" replace />} />
-              <Route
-                path="departures"
-                element={<Departures calendarDate={date} searchFlights={searchFlights} />}
-              />
-              <Route
+
+        <Routes>
+          <Route path="/" element={<Navigate to={`departures${search}`} replace />} />
+          <Route
+            path={pathname}
+            element={
+              <FlightsType calendarDate={date} searchFlights={searchFlights} pathname={pathname} />
+            }
+          />
+          {/* <Route
                 path="arrivals"
                 element={<Arrivals calendarDate={date} searchFlights={searchFlights} />}
                 searchFlights={searchFlights}
-              />
-            </Routes>
-          </tbody>
-        </table>
+              /> */}
+        </Routes>
       </div>
     </>
   );
