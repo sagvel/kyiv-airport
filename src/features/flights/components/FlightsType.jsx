@@ -10,16 +10,25 @@ const FlightsType = ({ flightDataFetching, flights, calendarDate, searchFlights,
     flightDataFetching(date);
   }, [date]);
 
+  console.log(flights);
+
   if (!flights) {
     return <div>No fligths</div>;
   }
   const { body } = flights;
   const path = pathname.slice(1, -1);
+
+  if (!body[`${path}`].length) {
+    return <div>No fligths</div>;
+  }
+
   console.log(body[`${path}`]);
-  console.log(body);
+  // console.log(body);
   const flightsForRender = body[`${path}`].filter(fligth =>
     fligth.codeShareData[0].codeShare.includes(searchFlights.toUpperCase()),
   );
+
+  console.log(flights);
 
   return (
     <table className="result-table">

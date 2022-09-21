@@ -3,7 +3,6 @@ import SearchFlights from './SearchFlights';
 import './styles.scss';
 import FlightsType from './FlightsType';
 import { Navigate, NavLink, Route, Routes, useLocation, useSearchParams } from 'react-router-dom';
-import Arrivals from './Arrivals';
 import moment from 'moment/moment';
 
 const Flights = () => {
@@ -17,16 +16,26 @@ const Flights = () => {
   const date = searchParams.get('date') || '';
 
   useEffect(() => {
-    setSearchParams({ date: currentDate, searchFlights });
+    setSearchParams({ date: currentDate });
   }, []);
 
   const calendarHandler = event => {
-    setSearchParams({ date: event.target.value, searchFlights });
+    if (event.target.value === '') {
+      searchParams.delete('date');
+    } else {
+      searchParams.set('date', event.target.value);
+    }
+    setSearchParams(searchParams);
   };
 
   const searchHandler = event => {
     event.preventDefault();
-    setSearchParams({ searchFlights: event.target.elements.search.value, date });
+    if (event.target.elements.search.value === '') {
+      searchParams.delete('searchFlights');
+    } else {
+      searchParams.set('searchFlights', event.target.elements.search.value);
+    }
+    setSearchParams(searchParams);
     console.log(searchFlights);
   };
 
@@ -38,7 +47,7 @@ const Flights = () => {
         {search}
       </div>
 
-      <SearchFlights searchHandler={searchHandler} />
+      <SearchFlights searchHandler={searchHandler} searchFlights={searchFlights} />
       <div className="search-results">
         <div className="tabs">
           <ul className="nav nav-tabs">
