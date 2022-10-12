@@ -10,15 +10,7 @@ const SearchFlights = ({ searchHandler }) => {
         viewBox="-512.053 29 44 43"
       >
         <defs data-v-547e829a="">
-          {/* <style data-v-547e829a="">
-          .cls-1 {
-            fill: none;
-          }
 
-          .cls-2 {
-            fill: #95989a;
-          }
-        </style> */}
         </defs>
         <g data-v-547e829a="" id="ic_search_white" transform="translate(-512.053 29)">
           <rect data-v-547e829a="" id="rectangle" width="44" height="43" className="cls-1"></rect>

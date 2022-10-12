@@ -36,16 +36,11 @@ const Flights = () => {
       searchParams.set('searchFlights', event.target.elements.search.value);
     }
     setSearchParams(searchParams);
-    console.log(searchFlights);
   };
 
   return (
     <>
       <h1 className="title">Search flight</h1>
-      <div className="params">
-        {pathname}
-        {search}
-      </div>
 
       <SearchFlights searchHandler={searchHandler} searchFlights={searchFlights} />
       <div className="search-results">
@@ -168,11 +163,6 @@ const Flights = () => {
               <FlightsType calendarDate={date} searchFlights={searchFlights} pathname={pathname} />
             }
           />
-          {/* <Route
-                path="arrivals"
-                element={<Arrivals calendarDate={date} searchFlights={searchFlights} />}
-                searchFlights={searchFlights}
-              /> */}
         </Routes>
       </div>
     </>
