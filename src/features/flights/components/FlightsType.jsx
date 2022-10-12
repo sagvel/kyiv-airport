@@ -6,7 +6,9 @@ import moment from 'moment';
 
 const FlightsType = ({ flightDataFetching, flights, calendarDate, searchFlights, pathname }) => {
   const date = moment(calendarDate).format('DD-MM-YYYY');
+  console.log(date);
   useEffect(() => {
+    console.log("effect launch");
     flightDataFetching(date);
   }, [date]);
 
@@ -22,19 +24,19 @@ const FlightsType = ({ flightDataFetching, flights, calendarDate, searchFlights,
     return <div>No fligths</div>;
   }
 
-  console.log(body[`${path}`]);
-  // console.log(body);
+  // console.log(body[`${path}`]);
+  console.log(body);
   const flightsForRender = body[`${path}`].filter(fligth =>
     fligth.codeShareData[0].codeShare.includes(searchFlights.toUpperCase()),
   );
 
-  console.log(flights);
+  // console.log(flights);
 
   return (
     <table className="result-table">
       <thead>
         <tr>
-          <th>Terninal</th>
+          <th className='terminal'>Terninal</th>
           <th>Local time</th>
           <th>Destination</th>
           <th>Status</th>
@@ -46,12 +48,13 @@ const FlightsType = ({ flightDataFetching, flights, calendarDate, searchFlights,
         {path === 'departure'
           ? flightsForRender.map(flight => (
               <tr key={flight.ID}>
-                <td>{flight.term}</td>
-                <td>{flight.timeDepShedule}</td>
+                <td className='terminal__letter'>{flight.term}</td>
+                <td>{moment(flight.timeDepShedule).format('H:mm')}</td>
                 <td>{flight['airportToID.city_en']}</td>
-                <td></td>
-                <td>
+                <td>Departed at {moment(flight.timeDepFact).format('H:mm')}</td>
+                <td className='airline-info'>
                   <img className="airline-logo" src={flight.airline.en.logoName} />
+                  {' '}
                   {flight.airline.en.name}
                 </td>
                 <td>{flight.codeShareData[0].codeShare}</td>
@@ -59,12 +62,13 @@ const FlightsType = ({ flightDataFetching, flights, calendarDate, searchFlights,
             ))
           : flightsForRender.map(flight => (
               <tr key={flight.ID}>
-                <td>{flight.term}</td>
-                <td>{flight.timeArrShedule}</td>
+                <td className='terminal__letter'>{flight.term}</td>
+                <td>{moment(flight.timeArrShedule).format('H:mm')}</td>
                 <td>{flight['airportFromID.city_en']}</td>
-                <td></td>
+                <td>Landed {moment(flight.timeArrExpectCalc).format('H:mm')}</td>
                 <td>
                   <img className="airline-logo" src={flight.airline.en.logoName} />
+                  {' '}
                   {flight.airline.en.name}
                 </td>
                 <td>{flight.codeShareData[0].codeShare}</td>

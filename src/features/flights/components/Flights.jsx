@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import SearchFlights from './SearchFlights';
-import './styles.scss';
-import FlightsType from './FlightsType';
 import { Navigate, NavLink, Route, Routes, useLocation, useSearchParams } from 'react-router-dom';
+import SearchFlights from './SearchFlights';
+import FlightsType from './FlightsType';
 import moment from 'moment/moment';
+import './styles.scss';
 
 const Flights = () => {
   const [searchParams, setSearchParams] = useSearchParams();

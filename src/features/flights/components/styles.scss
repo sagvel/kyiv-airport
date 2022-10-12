@@ -151,10 +151,16 @@
 
 thead tr {
   background-color: #fff;
+  
 }
 
 thead tr th {
+  text-align-last: left;
   padding: 10px;
+  &:first-child {
+    padding-left: 50px;
+  }
+
 }
 
 tr:nth-child(even) {
@@ -166,8 +172,11 @@ tbody {
 }
 
 tbody tr {
-  text-align: center;
   background-color: rgba(0, 102, 135, 0.1);
+
+  & .terminal__letter {
+    text-align: center;
+  }
 }
 
 tbody tr td {
@@ -185,4 +194,5 @@ tbody tr td {
 .airline-logo {
   height: 37px;
   width: auto;
+  vertical-align: middle;
 }
