@@ -8,7 +8,7 @@ const FlightsType = ({ flightDataFetching, flights, calendarDate, searchFlights,
   const date = moment(calendarDate).format('DD-MM-YYYY');
   console.log(date);
   useEffect(() => {
-    console.log("effect launch");
+    console.log('effect launch');
     flightDataFetching(date);
   }, [date]);
 
@@ -36,7 +36,7 @@ const FlightsType = ({ flightDataFetching, flights, calendarDate, searchFlights,
     <table className="result-table">
       <thead>
         <tr>
-          <th className='terminal'>Terninal</th>
+          <th className="terminal">Terninal</th>
           <th>Local time</th>
           <th>Destination</th>
           <th>Status</th>
@@ -48,13 +48,12 @@ const FlightsType = ({ flightDataFetching, flights, calendarDate, searchFlights,
         {path === 'departure'
           ? flightsForRender.map(flight => (
               <tr key={flight.ID}>
-                <td className='terminal__letter'>{flight.term}</td>
+                <td className="terminal__letter">{flight.term}</td>
                 <td>{moment(flight.timeDepShedule).format('H:mm')}</td>
                 <td>{flight['airportToID.city_en']}</td>
                 <td>Departed at {moment(flight.timeDepFact).format('H:mm')}</td>
-                <td className='airline-info'>
-                  <img className="airline-logo" src={flight.airline.en.logoName} />
-                  {' '}
+                <td className="airline-info">
+                  <img className="airline-logo" src={flight.airline.en.logoName} />{' '}
                   {flight.airline.en.name}
                 </td>
                 <td>{flight.codeShareData[0].codeShare}</td>
@@ -62,13 +61,12 @@ const FlightsType = ({ flightDataFetching, flights, calendarDate, searchFlights,
             ))
           : flightsForRender.map(flight => (
               <tr key={flight.ID}>
-                <td className='terminal__letter'>{flight.term}</td>
+                <td className="terminal__letter">{flight.term}</td>
                 <td>{moment(flight.timeArrShedule).format('H:mm')}</td>
                 <td>{flight['airportFromID.city_en']}</td>
                 <td>Landed {moment(flight.timeArrExpectCalc).format('H:mm')}</td>
                 <td>
-                  <img className="airline-logo" src={flight.airline.en.logoName} />
-                  {' '}
+                  <img className="airline-logo" src={flight.airline.en.logoName} />{' '}
                   {flight.airline.en.name}
                 </td>
                 <td>{flight.codeShareData[0].codeShare}</td>

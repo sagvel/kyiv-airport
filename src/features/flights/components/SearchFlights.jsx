@@ -9,9 +9,7 @@ const SearchFlights = ({ searchHandler }) => {
         xmlns="http://www.w3.org/2000/svg"
         viewBox="-512.053 29 44 43"
       >
-        <defs data-v-547e829a="">
-
-        </defs>
+        <defs data-v-547e829a=""></defs>
         <g data-v-547e829a="" id="ic_search_white" transform="translate(-512.053 29)">
           <rect data-v-547e829a="" id="rectangle" width="44" height="43" className="cls-1"></rect>
           <path
