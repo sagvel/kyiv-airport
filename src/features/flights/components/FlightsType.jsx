@@ -6,13 +6,11 @@ import moment from 'moment';
 
 const FlightsType = ({ flightDataFetching, flights, calendarDate, searchFlights, pathname }) => {
   const date = moment(calendarDate).format('DD-MM-YYYY');
-  console.log(date);
+
   useEffect(() => {
     console.log('effect launch');
     flightDataFetching(date);
   }, [date]);
-
-  console.log(flights);
 
   if (!flights) {
     return <div>No fligths</div>;
@@ -21,16 +19,12 @@ const FlightsType = ({ flightDataFetching, flights, calendarDate, searchFlights,
   const path = pathname.slice(1, -1);
 
   if (!body[`${path}`].length) {
-    return <div>No fligths</div>;
+    return <div>No fligths. Please choose the date before 24.02.2022</div>;
   }
 
-  // console.log(body[`${path}`]);
-  console.log(body);
   const flightsForRender = body[`${path}`].filter(fligth =>
     fligth.codeShareData[0].codeShare.includes(searchFlights.toUpperCase()),
   );
-
-  // console.log(flights);
 
   return (
     <table className="result-table">
